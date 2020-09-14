@@ -5,17 +5,17 @@
     <form class="formulario" action>
       <label>
         Name:
-        <input name="name" type="text" id="name" />
+        <input name="name" type="text" id="name" v-model="nome" />
       </label>
 
       <label>
         E-mail:
-        <input type="text" id="email" />
+        <input type="text" id="email" v-model="email" />
       </label>
 
       <label>
         Date of birth:
-        <input type="date" id="date" />
+        <input type="date" id="date" v-model="data" />
       </label>
 
       <div class="checkbox">
@@ -28,6 +28,7 @@
               id="micro"
               name="Processing - 1 micro - $ 1,00 per hour"
               value="1"
+              v-model="checado"
             />
             Processing - 1 micro - $ 1,00 per hour
           </label>
@@ -38,6 +39,7 @@
               id="medium"
               name="Processing - 1 medium - $ 2,00 per hour"
               value="2"
+              v-model="checado"
             />Processing - 1 medium - $ 2,00 per hour
           </label>
 
@@ -47,18 +49,31 @@
               id="large"
               name="Processing - 1 large - $ 10,00 per hour"
               value="10"
+              v-model="checado"
             />Processing - 1 large - $ 10,00 per hour
           </label>
         </div>
 
         <div class="input_check">
           <label for="gb">
-            <input type="checkbox" id="gb" name="Storage - 10 GB HD - $ 0.5 per hour" value="0.5" />Storage -
+            <input
+              type="checkbox"
+              id="gb"
+              v-model="checado"
+              name="Storage - 10 GB HD - $ 0.5 per hour"
+              value="0.5"
+            />Storage -
             10 GB HD - $ 0,5 per hour
           </label>
 
           <label for="hd">
-            <input type="checkbox" id="hd" name="Storage - 1 TB HD - $ 1,00 per hour" value="1" />Storage - 1
+            <input
+              type="checkbox"
+              id="hd"
+              v-model="checado"
+              name="Storage - 1 TB HD - $ 1,00 per hour"
+              value="1.0"
+            />Storage - 1
             TB HD - $ 1,00 per hour
           </label>
 
@@ -68,6 +83,7 @@
               id="gbssd"
               name="Storage - 100 GB SSD - $ 5,00 per hour"
               value="5"
+              v-model="checado"
             />Storage - 100 GB SSD - $ 5,00 per hour
           </label>
         </div>
@@ -75,23 +91,32 @@
 
       <div class="botao">
         <input class="botao_clear" id="clear" type="reset" value="CLEAR" />
-        <input class="botao_add" id="add" type="button" value="ADD" onclick="botao_add()" />
+        <input class="botao_add" id="add" type="button" value="ADD" @click="botao_add()" />
       </div>
     </form>
 
-    <table>
-      <thead>
+    <table class="table">
+      <thead class="table-dark">
         <tr>
-          <th>Name</th>
-          <th>E-mail</th>
-          <th>Date of Birth</th>
-          <th>Services</th>
-          <th>Total</th>
+          <th scope="col">Name</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Date of Birth</th>
+          <th scope="col">Services</th>
+          <th scope="col">Total</th>
         </tr>
       </thead>
+      <tbody>
+        <tr v-for="dado in dados" v-bind:key="dado.nome">
+          <td>{{dado.nome}}</td>
+          <td>{{dado.email}}</td>
+          <td>{{dado.data}}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
+
+<!--> modal -->
 
 <script>
 export default {
@@ -101,6 +126,8 @@ export default {
       nome: "",
       email: "",
       data: "",
+      dados: [],
+      
     };
   },
 
@@ -152,6 +179,11 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-left: 5%;
+}
+
+.cloud {
+  margin: 0 auto;
 }
 
 .checkbox {
@@ -208,18 +240,5 @@ label {
 
 #email {
   margin-left: 88px;
-}
-
-table {
-  border: 2px solid black;
-  width: 70%;
-  height: 40%;
-}
-th,
-td {
-  border: 2px solid black;
-  height: 25px;
-  text-align: center;
-  padding-top: 10px;
 }
 </style>
